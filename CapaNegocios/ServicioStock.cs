@@ -1,4 +1,5 @@
-﻿using CapaEntidades;
+﻿using CapaDatos;
+using CapaEntidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,26 +8,36 @@ using System.Threading.Tasks;
 
 namespace CapaNegocios
 {
-    class ServicioStock : IServicioBase<Stock>
+    class ServicioStock : Base, IServicioBase<Stock>
     {
-        public void Create(Stock obj)
+    
+        
+        public void Create(Stock stock)
+        {
+            _dbContext.stocks.Add(stock);
+            _dbContext.SaveChanges();
+        }
+
+        public void Delete(int id)
         {
             throw new NotImplementedException();
         }
 
         public List<Stock> Get()
         {
-            throw new NotImplementedException();
+           return _dbContext.stocks.ToList();
         }
 
-        public Stock GetById(int id)
+        public Stock GetById(int? id)
         {
-            throw new NotImplementedException();
+            return _dbContext.stocks.FirstOrDefault(x => x.Id == id);
         }
 
-        public void Update(int id)
+        public void Update(Stock stock)
         {
-            throw new NotImplementedException();
+            var stockToUpdate = _dbContext.stocks.Find(stock.Id);
+            _dbContext.Entry(stockToUpdate).CurrentValues.SetValues(stock);
+            _dbContext.SaveChanges();
         }
     }
 }

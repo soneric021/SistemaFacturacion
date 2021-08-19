@@ -1,4 +1,5 @@
-﻿using CapaEntidades;
+﻿using CapaDatos;
+using CapaEntidades;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,26 +8,35 @@ using System.Threading.Tasks;
 
 namespace CapaNegocios
 {
-    class ServicioEntrada : IServicioBase<Entrada>
+    class ServicioEntrada : Base, IServicioBase<Entrada>
     {
-        public void Create(Entrada obj)
+       
+        public void Create(Entrada entrada)
+        {
+            _dbContext.entradas.Add(entrada);
+            _dbContext.SaveChanges();
+        }
+
+        public void Delete(int id)
         {
             throw new NotImplementedException();
         }
 
         public List<Entrada> Get()
         {
-            throw new NotImplementedException();
+            return _dbContext.entradas.ToList();
         }
 
-        public Entrada GetById(int id)
+        public Entrada GetById(int? id)
         {
-            throw new NotImplementedException();
+            return _dbContext.entradas.FirstOrDefault(x => x.Id == id);
         }
 
-        public void Update(int id)
+        public void Update(Entrada entrada)
         {
-            throw new NotImplementedException();
+            var entradaToUpdate = _dbContext.entradas.Find(entrada.Id);
+            _dbContext.Entry(entradaToUpdate).CurrentValues.SetValues(entrada);
+            _dbContext.SaveChanges();
         }
     }
 }

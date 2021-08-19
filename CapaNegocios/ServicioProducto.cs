@@ -8,17 +8,19 @@ using System.Threading.Tasks;
 
 namespace CapaNegocios
 {
-    class ServicioProducto : IServicioBase<Producto>
+    class ServicioProducto : Base, IServicioBase<Producto>
     {
-        private SistemaFacturacionDbContext _dbContext;
-        public ServicioProducto(SistemaFacturacionDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
+        
+      
         public void Create(Producto producto)
         {
             _dbContext.productos.Add(producto);
             _dbContext.SaveChanges();
+        }
+
+        public void Delete(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public List<Producto> Get()
@@ -26,14 +28,16 @@ namespace CapaNegocios
             return _dbContext.productos.ToList();
         }
 
-        public Producto GetById(int id)
+        public Producto GetById(int? id)
         {
             return _dbContext.productos.FirstOrDefault(x => x.Id == id);
         }
 
-        public void Update(int id)
+        public void Update(Producto producto)
         {
-            throw new NotImplementedException();
+            var productoToUpdate = _dbContext.productos.Find(producto.Id);
+            _dbContext.Entry(productoToUpdate).CurrentValues.SetValues(producto);
+            _dbContext.SaveChanges();
         }
     }
 }

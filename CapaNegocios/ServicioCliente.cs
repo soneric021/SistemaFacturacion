@@ -4,29 +4,44 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CapaDatos;
 
 namespace CapaNegocios
 {
-    class ServicioCliente : IServicioBase<Cliente>
+    public class ServicioCliente : Base, IServicioBase<Cliente>
     {
-        public void Create(Cliente obj)
+       
+
+        public void Create(Cliente cliente)
         {
-            throw new NotImplementedException();
+            _dbContext.clientes.Add(cliente);
+            _dbContext.SaveChanges();
+        }
+
+      
+        public void Delete(int id)
+        {
+            var clienteToDelete = _dbContext.clientes.Find(id);
+            _dbContext.clientes.Remove(clienteToDelete);
+            _dbContext.SaveChanges();
         }
 
         public List<Cliente> Get()
         {
-            throw new NotImplementedException();
+           return _dbContext.clientes.ToList();
         }
 
-        public Cliente GetById(int id)
+        public Cliente GetById(int? id)
         {
-            throw new NotImplementedException();
+            return _dbContext.clientes.FirstOrDefault(x => x.Id == id);
         }
 
-        public void Update(int id)
+  
+        public void Update(Cliente cliente)
         {
-            throw new NotImplementedException();
+            var clienteToUpdate = _dbContext.clientes.Find(cliente.Id);
+            _dbContext.Entry(clienteToUpdate).CurrentValues.SetValues(cliente);
+            _dbContext.SaveChanges();
         }
     }
 }

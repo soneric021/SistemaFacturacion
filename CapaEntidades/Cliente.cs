@@ -20,7 +20,12 @@ namespace CapaEntidades
         [Required]
         public string Email { get; set; }
         [Required]
-        public int Categoria { get; set; } // 0 premium - 1 regular
+        public Categoria Categoria { get; set; } // 0 premium - 1 regular
 
+    }
+    public enum Categoria
+    {
+        Premium, 
+        Regular
     }
 }

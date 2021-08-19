@@ -9,8 +9,9 @@ namespace CapaNegocios
     interface IServicioBase<T>
     {
         List<T> Get();
-        T GetById(int id);
+        T GetById(int? id);
         void Create(T obj);
-        void Update(int id);
+        void Update(T obj);
+        void Delete(int id);
     }
 }
