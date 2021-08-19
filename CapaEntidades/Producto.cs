@@ -5,7 +5,7 @@ using System.Text;
 
 namespace CapaEntidades
 {
-    class Producto
+    public class Producto
     {
         [Key]
         public int Id { get; set; }

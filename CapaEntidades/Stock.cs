@@ -6,17 +6,19 @@ using System.Text;
 
 namespace CapaEntidades
 {
-    class Stock
+    public class Stock
     {
+        [Key]
+        public int Id { get; set; }
         public int IdProveedor { get; set; }
         public int IdProducto { get; set; }
         [Required]
         public int Cantidad { get; set; }
 
 
-        [ForeignKey("idProveedor")]
+        [ForeignKey("IdProveedor")]
         public Proveedor proveedor { get; set; }
-        [ForeignKey("idProducto")]
+        [ForeignKey("IdProducto")]
         public Producto producto { get; set; }
     }
 }
