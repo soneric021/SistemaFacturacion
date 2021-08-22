@@ -71,7 +71,7 @@
         RD$@String.Format("{0:0.00}", item.Total)
     </td>
     <td>
-        <a href="@Url.Action("Details")" class="btn btn-info"><i class="fa fa-plus" aria-hidden="true"></i> Detalles</a>
+        <a href="@Url.Action("Details", new { Id = item.Id })" class="btn btn-info"><i class="fa fa-plus" aria-hidden="true"></i> Detalles</a>
     </td>
 </tr>
     }

@@ -33,26 +33,30 @@
     }
 
     function addFactura() {
-        $.ajax({
-            type: "POST",
-            url: "/Facturacion/create",
-            contentType: 'application/json; charset=utf-8',
-            data: JSON.stringify({ Fecha: $("#fecha").val(), IdCliente: $("#idCliente").val(), Total: total , productos: productos }),
-            success: function (datos) {
-           
-            },
-            error: function (datos) {
-                if (datos.status == 200) {
-                    window.location.href = "/Facturacion/Index";
-                    console.log(datos);
-                } else {
-                    console.log(datos);
-                    alert("Debe agregar productos y la fecha para facturar");
-                }
-                
-            },
-            dataType: "JSON"
-        })
+        if ($("#fecha").val() != "" && productos.length > 0) {
+            $.ajax({
+                type: "POST",
+                url: "/Facturacion/create",
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({ Fecha: $("#fecha").val(), IdCliente: $("#idCliente").val(), Total: total, productos: productos }),
+                success: function (datos) {
+
+                },
+                error: function (datos) {
+                    if (datos.status == 200) {
+                        window.location.href = "/Facturacion/Index";
+                        console.log(datos);
+                    } else {
+                        console.log(datos);
+                        alert("Debe agregar productos y la fecha para facturar");
+                    }
+
+                },
+                dataType: "JSON"
+            })
+        } else {
+            alert("Debe agregar productos y la fecha para facturar");
+        }
     }
 </script>
 <h2>Agregar Factura</h2>
