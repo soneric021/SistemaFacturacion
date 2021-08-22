@@ -15,10 +15,11 @@ namespace CapaNegocios
         
         public void Create(Stock stock)
         {
-            var stockToUpdate = _dbContext.stocks.FirstOrDefault(x => x.IdProductoStock == stock.IdProductoStock && x.IdProveedor == stock.IdProveedor);
+            var stockToUpdate = _dbContext.stocks.FirstOrDefault(x => x.IdProductoStock == stock.IdProductoStock);
             if (stockToUpdate != null)
             {
                 stockToUpdate.Cantidad += stock.Cantidad;
+                stockToUpdate.IdProveedor = stock.IdProveedor;
                 _dbContext.Entry(stockToUpdate).State = EntityState.Modified;
                 _dbContext.SaveChanges();
             }
