@@ -27,6 +27,7 @@
                         Id = c.Int(nullable: false, identity: true),
                         IdFacturacion = c.Int(nullable: false),
                         IdProducto = c.Int(nullable: false),
+                        Cantidad = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Facturacions", t => t.IdFacturacion, cascadeDelete: true)
@@ -58,20 +59,18 @@
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.Entradas",
+                "dbo.Stocks",
                 c => new
                     {
-                        Id = c.Int(nullable: false, identity: true),
-                        Movimiento = c.String(nullable: false),
-                        Fecha = c.DateTime(nullable: false),
+                        IdProductoStock = c.Int(nullable: false),
                         IdProveedor = c.Int(nullable: false),
-                        IdProducto = c.Int(nullable: false),
+                        Cantidad = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Productoes", t => t.IdProducto, cascadeDelete: true)
+                .PrimaryKey(t => t.IdProductoStock)
                 .ForeignKey("dbo.Proveedors", t => t.IdProveedor, cascadeDelete: true)
-                .Index(t => t.IdProveedor)
-                .Index(t => t.IdProducto);
+                .ForeignKey("dbo.Productoes", t => t.IdProductoStock)
+                .Index(t => t.IdProductoStock)
+                .Index(t => t.IdProveedor);
             
             CreateTable(
                 "dbo.Proveedors",
@@ -86,13 +85,15 @@
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.Stocks",
+                "dbo.Entradas",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
+                        Movimiento = c.String(nullable: false),
+                        Fecha = c.DateTime(nullable: false),
+                        Cantidad = c.Int(nullable: false),
                         IdProveedor = c.Int(nullable: false),
                         IdProducto = c.Int(nullable: false),
-                        Cantidad = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Productoes", t => t.IdProducto, cascadeDelete: true)
@@ -104,23 +105,23 @@
         
         public override void Down()
         {
-            DropForeignKey("dbo.Stocks", "IdProveedor", "dbo.Proveedors");
-            DropForeignKey("dbo.Stocks", "IdProducto", "dbo.Productoes");
             DropForeignKey("dbo.Entradas", "IdProveedor", "dbo.Proveedors");
             DropForeignKey("dbo.Entradas", "IdProducto", "dbo.Productoes");
+            DropForeignKey("dbo.Stocks", "IdProductoStock", "dbo.Productoes");
+            DropForeignKey("dbo.Stocks", "IdProveedor", "dbo.Proveedors");
             DropForeignKey("dbo.DetalleFacturas", "IdProducto", "dbo.Productoes");
             DropForeignKey("dbo.DetalleFacturas", "IdFacturacion", "dbo.Facturacions");
             DropForeignKey("dbo.Facturacions", "IdCliente", "dbo.Clientes");
-            DropIndex("dbo.Stocks", new[] { "IdProducto" });
-            DropIndex("dbo.Stocks", new[] { "IdProveedor" });
             DropIndex("dbo.Entradas", new[] { "IdProducto" });
             DropIndex("dbo.Entradas", new[] { "IdProveedor" });
+            DropIndex("dbo.Stocks", new[] { "IdProveedor" });
+            DropIndex("dbo.Stocks", new[] { "IdProductoStock" });
             DropIndex("dbo.Facturacions", new[] { "IdCliente" });
             DropIndex("dbo.DetalleFacturas", new[] { "IdProducto" });
             DropIndex("dbo.DetalleFacturas", new[] { "IdFacturacion" });
-            DropTable("dbo.Stocks");
-            DropTable("dbo.Proveedors");
             DropTable("dbo.Entradas");
+            DropTable("dbo.Proveedors");
+            DropTable("dbo.Stocks");
             DropTable("dbo.Productoes");
             DropTable("dbo.Facturacions");
             DropTable("dbo.DetalleFacturas");

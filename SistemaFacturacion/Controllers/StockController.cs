@@ -32,7 +32,7 @@ namespace SistemaFacturacion.Controllers
         // más detalles, vea https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,IdProveedor,IdProducto,Cantidad")] Stock stock)
+        public ActionResult Create([Bind(Include = "Id,IdProveedor,IdProductoStock,Cantidad")] Stock stock)
         {
             if (ModelState.IsValid)
             {
