@@ -17,6 +17,7 @@ namespace SistemaFacturacion.Controllers
         public ActionResult Index(string searchString, string filtroCategoria)
         {
             ViewBag.categorias = Enum.GetValues(typeof(CapaEntidades.Categoria));
+            ViewBag.clienteCantidad = 0;
             var clientes = servicioCliente.Get();
 
             if (!String.IsNullOrEmpty(searchString))
@@ -33,6 +34,7 @@ namespace SistemaFacturacion.Controllers
                 {
                     clientes = clientes.Where(x => x.Categoria == Categoria.Regular).ToList();
                 }
+                ViewBag.clienteCantidad = clientes.Count;
             }
             return View(clientes);
         }

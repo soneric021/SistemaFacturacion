@@ -19,6 +19,11 @@ namespace SistemaFacturacion.Controllers
         {
             var facturacion = servicioFacturacion.Get();
             ViewBag.clientes = servicioCliente.Get();
+            ViewBag.conteo = 0;
+            ViewBag.sumatoria = 0;
+            ViewBag.max = 0;
+            ViewBag.min = 0;
+            ViewBag.promedio = 0;
             if (!String.IsNullOrEmpty(filtroFecha))
             {
                 facturacion = facturacion.Where(x => x.Fecha.Date == DateTime.Parse(filtroFecha)).ToList();
@@ -26,6 +31,16 @@ namespace SistemaFacturacion.Controllers
             if (!String.IsNullOrEmpty(filtroCliente))
             {
                 facturacion = facturacion.Where(x => x.IdCliente == int.Parse(filtroCliente)).ToList();
+            }
+            if (!String.IsNullOrEmpty(filtroFecha) || !String.IsNullOrEmpty(filtroCliente) && facturacion.Count > 0) {
+                ViewBag.conteo = facturacion.Count;
+                ViewBag.sumatoria = facturacion.Sum(x => x.Total);
+                ViewBag.max = facturacion.Max(x => x.Total);
+                ViewBag.min = facturacion.Min(x => x.Total);
+                if(facturacion.Count > 1)
+                {
+                    ViewBag.promedio = facturacion.Sum(x => x.Total) / facturacion.Count;
+                }
             }
 
             return View(facturacion);

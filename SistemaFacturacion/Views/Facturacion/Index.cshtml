@@ -30,8 +30,10 @@
         </div>
     </div>
 }
-
-<table class="table" style="margin-top:70px;">
+<p style="margin-top:70px;">
+    <strong>Cantidad de Facturas:  </strong>@ViewBag.conteo   <strong> Sumatoria:  </strong>  @String.Format("{0:0.00}", ViewBag.sumatoria) <strong> Max:  </strong>  @String.Format("{0:0.00}", ViewBag.max) <strong> Min:  </strong>  @String.Format("{0:0.00}", ViewBag.min)   <strong> Promedio:  </strong>    @String.Format("{0:0.00}", ViewBag.promedio)
+</p>
+<table class="table" >
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.cliente.Nombre)

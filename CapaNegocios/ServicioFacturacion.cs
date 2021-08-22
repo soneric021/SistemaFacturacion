@@ -45,7 +45,7 @@ namespace CapaNegocios
             factura.detalleFacturas = detalle;
             facturacionDatos.Create(factura);
         }
-        public IEnumerable<Facturacion> Get()
+        public List<Facturacion> Get()
         {
             return facturacionDatos.Get();
         }

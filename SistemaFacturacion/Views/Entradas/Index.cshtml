@@ -32,12 +32,14 @@
     </div>
 </div>
 }
-<p></p>
-<table class="table" style="margin-top:80px;">
+<p  style="margin-top:80px;">
+    <strong>  Cantidad de entradas: </strong>@ViewBag.conteo   <strong> Sumatoria: </strong>@ViewBag.sumatoria <strong> Promedio: </strong>@ViewBag.promedio
+</p>
+<table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Movimiento)
-        </th>
+        </th> 
         <th>
             @Html.DisplayNameFor(model => model.Fecha)
         </th>
