@@ -28,7 +28,7 @@
             Id: $("#idProducto").val(),
             Cantidad: cantidad
         })
-        total += parseInt(precio) + parseInt(cantidad);
+        total += parseInt(precio) * parseInt(cantidad);
         $("#tableProductRecords").last().append(productRecords);
         $("#total").val(total);
         $("#cantidad").val("");
