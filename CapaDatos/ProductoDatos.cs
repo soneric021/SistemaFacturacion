@@ -11,7 +11,6 @@ namespace CapaNegocios
     public class ProductoDatos : Base, IDatosBase<Producto>
     {
         
-      
         public void Create(Producto producto)
         {
             _dbContext.productos.Add(producto);
@@ -20,7 +19,9 @@ namespace CapaNegocios
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var productoToDelete = _dbContext.productos.Find(id);
+            _dbContext.productos.Remove(productoToDelete);
+            _dbContext.SaveChanges();
         }
 
         public List<Producto> Get()
