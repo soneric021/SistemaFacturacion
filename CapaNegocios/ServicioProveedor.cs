@@ -8,37 +8,34 @@ using CapaEntidades;
 
 namespace CapaNegocios
 {
-    class ServicioProveedor : Base, IServicioBase<Proveedor>
+    public class ServicioProveedor :  IServicioBase<Proveedor>
     {
-    
+        private ProveedorDatos proveedorDatos = new ProveedorDatos();
 
         public void Create(Proveedor proveedor)
         {
-            _dbContext.proveedores.Add(proveedor);
-            _dbContext.SaveChanges();
+            proveedorDatos.Create(proveedor);
 
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            proveedorDatos.Delete(id);
         }
 
         public List<Proveedor> Get()
         {
-            return _dbContext.proveedores.ToList();
+            return proveedorDatos.Get();
         }
 
         public Proveedor GetById(int? id)
         {
-            return _dbContext.proveedores.SingleOrDefault(x => x.Id == id);
+            return proveedorDatos.GetById(id);
         }
 
         public void Update(Proveedor proveedor)
         {
-            var proveedorToUpdate = _dbContext.proveedores.Find(proveedor.Id);
-            _dbContext.Entry(proveedorToUpdate).CurrentValues.SetValues(proveedor);
-            _dbContext.SaveChanges();
+            proveedorDatos.Update(proveedor);
         }
     }
 }

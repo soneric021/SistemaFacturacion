@@ -1,47 +1,40 @@
 ﻿using CapaEntidades;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using CapaDatos;
+
 
 namespace CapaNegocios
 {
-    public class ServicioCliente : Base, IServicioBase<Cliente>
+    public class ServicioCliente :  IServicioBase<Cliente>
     {
-       
+        private ClienteDatos clienteDatos = new ClienteDatos();
 
         public void Create(Cliente cliente)
         {
-            _dbContext.clientes.Add(cliente);
-            _dbContext.SaveChanges();
+            clienteDatos.Create(cliente);
         }
 
       
         public void Delete(int id)
         {
-            var clienteToDelete = _dbContext.clientes.Find(id);
-            _dbContext.clientes.Remove(clienteToDelete);
-            _dbContext.SaveChanges();
+            clienteDatos.Delete(id);
         }
 
         public List<Cliente> Get()
         {
-           return _dbContext.clientes.ToList();
+            return clienteDatos.Get();
         }
 
         public Cliente GetById(int? id)
         {
-            return _dbContext.clientes.FirstOrDefault(x => x.Id == id);
+            return clienteDatos.GetById(id);
         }
 
   
         public void Update(Cliente cliente)
         {
-            var clienteToUpdate = _dbContext.clientes.Find(cliente.Id);
-            _dbContext.Entry(clienteToUpdate).CurrentValues.SetValues(cliente);
-            _dbContext.SaveChanges();
+            clienteDatos.Update(cliente);
         }
     }
 }

@@ -8,36 +8,33 @@ using System.Threading.Tasks;
 
 namespace CapaNegocios
 {
-    class ServicioProducto : Base, IServicioBase<Producto>
+    public class ServicioProducto : IServicioBase<Producto>
     {
-        
-      
+
+        private ProductoDatos productoDatos = new ProductoDatos();
         public void Create(Producto producto)
         {
-            _dbContext.productos.Add(producto);
-            _dbContext.SaveChanges();
+            productoDatos.Create(producto);
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            productoDatos.Delete(id);
         }
 
         public List<Producto> Get()
         {
-            return _dbContext.productos.ToList();
+            return productoDatos.Get();
         }
-
+        
         public Producto GetById(int? id)
         {
-            return _dbContext.productos.FirstOrDefault(x => x.Id == id);
+            return productoDatos.GetById(id);
         }
 
         public void Update(Producto producto)
         {
-            var productoToUpdate = _dbContext.productos.Find(producto.Id);
-            _dbContext.Entry(productoToUpdate).CurrentValues.SetValues(producto);
-            _dbContext.SaveChanges();
+            productoDatos.Update(producto);
         }
     }
 }

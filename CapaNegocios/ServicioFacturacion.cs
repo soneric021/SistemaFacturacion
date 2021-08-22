@@ -8,35 +8,44 @@ using System.Threading.Tasks;
 
 namespace CapaNegocios
 {
-    class ServicioFacturacion : Base,IServicioBase<Facturacion>
+    public class ServicioFacturacion 
     {
-      
-        public void Create(Facturacion facturacion)
+        private FacturacionDatos facturacionDatos = new FacturacionDatos();
+        private StockDatos StockDatos = new StockDatos();
+        private ClienteDatos clienteDatos = new ClienteDatos();
+        public void AgregarFacturacion(FacturacionViewModel facturacion)
         {
-            _dbContext.facturaciones.Add(facturacion);
-            _dbContext.SaveChanges();
+            var cliente = clienteDatos.GetById(facturacion.IdCliente);
+            if (cliente.Categoria == Categoria.Premium)
+            {
+                facturacion.Total -= facturacion.Total * 0.05;
+            }
+            var factura = new Facturacion()
+            {
+                Fecha = facturacion.Fecha,
+                IdCliente = facturacion.IdCliente,
+                Total = facturacion.Total
+            };
+            
+            
+            List<DetalleFactura> detalle = new List<DetalleFactura>();
+            
+           
+            foreach (ProductoViewModel producto in facturacion.productos)
+            {
+                detalle.Add(new DetalleFactura() {  IdProducto = producto.Id, Cantidad=producto.Cantidad });
+                StockDatos.UpdateStockByIdProduct(producto.Id, producto.Cantidad);
+            }
+            factura.detalleFacturas = detalle;
+            facturacionDatos.Create(factura);
         }
-
-        public void Delete(int id)
+        public IEnumerable<Facturacion> Get()
         {
-            throw new NotImplementedException();
+            return facturacionDatos.Get();
         }
-
-        public List<Facturacion> Get()
+        public IEnumerable<DetalleFactura> Get(int? id)
         {
-            return _dbContext.facturaciones.ToList();
-        }
-
-        public Facturacion GetById(int? id)
-        {
-            return _dbContext.facturaciones.FirstOrDefault(x => x.Id == id);
-        }
-
-        public void Update(Facturacion facturacion)
-        {
-            var facturacionToUpdate = _dbContext.facturaciones.Find(facturacion.Id);
-            _dbContext.Entry(facturacionToUpdate).CurrentValues.SetValues(facturacion);
-            _dbContext.SaveChanges();
+            return facturacionDatos.GetDetalleFacturasByFactura(id);
         }
     }
 }

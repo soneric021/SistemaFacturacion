@@ -8,17 +8,18 @@ namespace CapaEntidades
 {
     public class Stock
     {
-        [Key]
-        public int Id { get; set; }
+        [Key,ForeignKey("producto")]
+        public int IdProductoStock { get; set; }
+
         public int IdProveedor { get; set; }
-        public int IdProducto { get; set; }
         [Required]
         public int Cantidad { get; set; }
+        
 
 
         [ForeignKey("IdProveedor")]
         public Proveedor proveedor { get; set; }
-        [ForeignKey("IdProducto")]
-        public Producto producto { get; set; }
+      
+        public virtual Producto producto { get; set; }
     }
 }

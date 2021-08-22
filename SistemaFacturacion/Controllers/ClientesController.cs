@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
@@ -16,9 +14,27 @@ namespace SistemaFacturacion.Controllers
         private ServicioCliente servicioCliente = new ServicioCliente();
 
         // GET: Clientes
-        public ActionResult Index()
+        public ActionResult Index(string searchString, string filtroCategoria)
         {
-            return View(servicioCliente.Get());
+            ViewBag.categorias = Enum.GetValues(typeof(CapaEntidades.Categoria));
+            var clientes = servicioCliente.Get();
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                clientes = clientes.Where(x => x.Nombre.ToLower() == searchString.ToLower()).ToList();
+            }
+            if(!String.IsNullOrEmpty(filtroCategoria))
+            {
+                if(filtroCategoria.ToLower() == "Premium".ToLower())
+                {
+                    clientes = clientes.Where(x => x.Categoria == Categoria.Premium).ToList();
+                }
+                else
+                {
+                    clientes = clientes.Where(x => x.Categoria == Categoria.Regular).ToList();
+                }
+            }
+            return View(clientes);
         }
 
         // GET: Clientes/Details/5

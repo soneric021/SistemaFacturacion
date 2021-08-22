@@ -7,13 +7,13 @@ namespace CapaDatos.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class InitialCreate : IMigrationMetadata
+    public sealed partial class addingTrigger : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(InitialCreate));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(addingTrigger));
         
         string IMigrationMetadata.Id
         {
-            get { return "202108182014425_InitialCreate"; }
+            get { return "202108201710510_addingTrigger"; }
         }
         
         string IMigrationMetadata.Source

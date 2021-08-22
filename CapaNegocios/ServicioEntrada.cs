@@ -8,35 +8,33 @@ using System.Threading.Tasks;
 
 namespace CapaNegocios
 {
-    class ServicioEntrada : Base, IServicioBase<Entrada>
+    public class ServicioEntrada : IServicioBase<Entrada>
     {
+        private EntradaDatos entradaDatos = new EntradaDatos();
        
         public void Create(Entrada entrada)
         {
-            _dbContext.entradas.Add(entrada);
-            _dbContext.SaveChanges();
+            entradaDatos.Create(entrada);
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            entradaDatos.Delete(id);
         }
 
         public List<Entrada> Get()
         {
-            return _dbContext.entradas.ToList();
+            return entradaDatos.Get();
         }
 
         public Entrada GetById(int? id)
         {
-            return _dbContext.entradas.FirstOrDefault(x => x.Id == id);
+            return entradaDatos.GetById(id);
         }
 
         public void Update(Entrada entrada)
         {
-            var entradaToUpdate = _dbContext.entradas.Find(entrada.Id);
-            _dbContext.Entry(entradaToUpdate).CurrentValues.SetValues(entrada);
-            _dbContext.SaveChanges();
+            entradaDatos.Update(entrada);
         }
     }
 }

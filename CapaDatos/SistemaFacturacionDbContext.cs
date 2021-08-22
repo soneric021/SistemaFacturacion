@@ -11,7 +11,14 @@ namespace CapaDatos
 {
     public class SistemaFacturacionDbContext : DbContext
     {
-        public SistemaFacturacionDbContext() : base("DefaultConnection")
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Producto>()
+                .HasOptional(x => x.stock)
+                .WithRequired(s => s.producto);
+                
+        }
+            public SistemaFacturacionDbContext() : base("DefaultConnectionString")
         {
 
 
@@ -22,7 +29,8 @@ namespace CapaDatos
         public DbSet<Facturacion> facturaciones { get; set; }
         public DbSet<Stock> stocks { get; set; }
         public DbSet<Proveedor> proveedores { get; set; }
-
+        public DbSet<DetalleFactura> detalleFacturas { get; set; }
+       
     }
 }
 

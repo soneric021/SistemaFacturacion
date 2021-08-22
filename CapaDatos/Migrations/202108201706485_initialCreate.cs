@@ -3,7 +3,7 @@
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class InitialCreate : DbMigration
+    public partial class initialCreate : DbMigration
     {
         public override void Up()
         {
@@ -21,14 +21,18 @@
                 .PrimaryKey(t => t.Id);
             
             CreateTable(
-                "dbo.Entradas",
+                "dbo.DetalleFacturas",
                 c => new
                     {
                         Id = c.Int(nullable: false, identity: true),
-                        Movimiento = c.String(nullable: false),
-                        Fecha = c.DateTime(nullable: false),
+                        IdFacturacion = c.Int(nullable: false),
+                        IdProducto = c.Int(nullable: false),
                     })
-                .PrimaryKey(t => t.Id);
+                .PrimaryKey(t => t.Id)
+                .ForeignKey("dbo.Facturacions", t => t.IdFacturacion, cascadeDelete: true)
+                .ForeignKey("dbo.Productoes", t => t.IdProducto, cascadeDelete: true)
+                .Index(t => t.IdFacturacion)
+                .Index(t => t.IdProducto);
             
             CreateTable(
                 "dbo.Facturacions",
@@ -50,11 +54,24 @@
                         Id = c.Int(nullable: false, identity: true),
                         Nombre = c.String(nullable: false),
                         Precio = c.Double(nullable: false),
-                        Facturacion_Id = c.Int(),
+                    })
+                .PrimaryKey(t => t.Id);
+            
+            CreateTable(
+                "dbo.Entradas",
+                c => new
+                    {
+                        Id = c.Int(nullable: false, identity: true),
+                        Movimiento = c.String(nullable: false),
+                        Fecha = c.DateTime(nullable: false),
+                        IdProveedor = c.Int(nullable: false),
+                        IdProducto = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Facturacions", t => t.Facturacion_Id)
-                .Index(t => t.Facturacion_Id);
+                .ForeignKey("dbo.Productoes", t => t.IdProducto, cascadeDelete: true)
+                .ForeignKey("dbo.Proveedors", t => t.IdProveedor, cascadeDelete: true)
+                .Index(t => t.IdProveedor)
+                .Index(t => t.IdProducto);
             
             CreateTable(
                 "dbo.Proveedors",
@@ -89,17 +106,24 @@
         {
             DropForeignKey("dbo.Stocks", "IdProveedor", "dbo.Proveedors");
             DropForeignKey("dbo.Stocks", "IdProducto", "dbo.Productoes");
-            DropForeignKey("dbo.Productoes", "Facturacion_Id", "dbo.Facturacions");
+            DropForeignKey("dbo.Entradas", "IdProveedor", "dbo.Proveedors");
+            DropForeignKey("dbo.Entradas", "IdProducto", "dbo.Productoes");
+            DropForeignKey("dbo.DetalleFacturas", "IdProducto", "dbo.Productoes");
+            DropForeignKey("dbo.DetalleFacturas", "IdFacturacion", "dbo.Facturacions");
             DropForeignKey("dbo.Facturacions", "IdCliente", "dbo.Clientes");
             DropIndex("dbo.Stocks", new[] { "IdProducto" });
             DropIndex("dbo.Stocks", new[] { "IdProveedor" });
-            DropIndex("dbo.Productoes", new[] { "Facturacion_Id" });
+            DropIndex("dbo.Entradas", new[] { "IdProducto" });
+            DropIndex("dbo.Entradas", new[] { "IdProveedor" });
             DropIndex("dbo.Facturacions", new[] { "IdCliente" });
+            DropIndex("dbo.DetalleFacturas", new[] { "IdProducto" });
+            DropIndex("dbo.DetalleFacturas", new[] { "IdFacturacion" });
             DropTable("dbo.Stocks");
             DropTable("dbo.Proveedors");
+            DropTable("dbo.Entradas");
             DropTable("dbo.Productoes");
             DropTable("dbo.Facturacions");
-            DropTable("dbo.Entradas");
+            DropTable("dbo.DetalleFacturas");
             DropTable("dbo.Clientes");
         }
     }

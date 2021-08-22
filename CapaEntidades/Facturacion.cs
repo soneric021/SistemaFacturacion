@@ -17,7 +17,7 @@ namespace CapaEntidades
         [Required]
         public DateTime Fecha { get; set; }
 
-        public ICollection<Producto> productos { get; set; }
+        public ICollection<DetalleFactura> detalleFacturas { get; set; }
 
         [ForeignKey("IdCliente")]
         public Cliente cliente { get; set; }

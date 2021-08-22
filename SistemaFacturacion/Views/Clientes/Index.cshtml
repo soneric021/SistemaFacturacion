@@ -4,11 +4,34 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
+<h2>Lista de clientes</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+
+@using (Html.BeginForm())
+{
+<div class="form-horizontal">
+    <div class="col-md-2 ">
+        @Html.Label("Buscar por Nombre", htmlAttributes: new { @class = "control-label" })
+    </div>
+    <div class="col-md-3">
+        @Html.Editor("SearchString", new { htmlAttributes = new { @class = "form-control", @style = "max-width:none;" } })
+    </div>
+    <div class="col-md-2 ">
+        @Html.Label("Buscar por Categoria", htmlAttributes: new { @class = "control-label" })
+    </div>
+    <div class="col-md-3">
+        @Html.DropDownList("filtroCategoria", new SelectList(ViewBag.categorias), "Seleccionar", htmlAttributes: new { @class = "form-control" })
+    </div>
+    <div class="col-md-2">
+        <input type="submit" value="Buscar" class="btn btn-danger col-md-12" />
+    </div>
+</div>
+}
+
 <table class="table">
     <tr>
         <th>
@@ -29,29 +52,43 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Cedula)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nombre)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Telefono)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Categoria)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cedula)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Categoria)
+            </td>
+            <td>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        Opciones <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu text-center" role="menu">
+                        <li>
+                            <a href="@Url.Action("Edit", new { id = item.Id })"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Details", new { id = item.Id })"><i class="fa fa-eye" aria-hidden="true"></i> Ver</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Delete", new { id = item.Id })"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a>
+                        </li>
+                    </ul>
+                    </div>
+</td>
+        </tr>
+    }
 
 </table>

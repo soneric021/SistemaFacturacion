@@ -1,0 +1,72 @@
+﻿@model IEnumerable<CapaEntidades.Entrada>
+
+@{
+    ViewBag.Title = "Entradas";
+}
+
+<h2>Lista de Entradas</h2>
+
+@using (Html.BeginForm())
+{
+<div class="form-horizontal">
+    <div class="col-md-2 ">
+        @Html.Label("Filtrar por: Fecha", htmlAttributes: new { @class = "control-label" })
+    </div>
+    <div class="col-md-2">
+        <input name="filtroFecha" type="date" class="form-control">
+    </div>
+    <div class="col-md-1 ">
+        @Html.Label("Proveedor", htmlAttributes: new { @class = "control-label" })
+    </div>
+    <div class="col-md-2">
+        @Html.DropDownList("filtroProveedor", new SelectList(ViewBag.productos, "Id", "Nombre"), "Seleccionar", htmlAttributes: new { @class = "form-control" })
+    </div>
+    <div class="col-md-1 ">
+        @Html.Label(" Producto", htmlAttributes: new { @class = "control-label" })
+    </div>
+    <div class="col-md-2">
+        @Html.DropDownList("filtroProducto", new SelectList(ViewBag.proveedores, "Id", "Nombre"), "Seleccionar", htmlAttributes: new { @class = "form-control" })
+    </div>
+    <div class="col-md-2">
+        <input type="submit" value="Buscar" class="btn btn-danger col-md-12" />
+    </div>
+</div>
+}
+<p></p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Movimiento)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Fecha)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.proveedor.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.producto.Nombre)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Movimiento)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Fecha)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.proveedor.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.producto.Nombre)
+            </td>
+
+        </tr>
+    }
+
+</table>

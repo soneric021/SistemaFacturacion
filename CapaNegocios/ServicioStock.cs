@@ -8,36 +8,33 @@ using System.Threading.Tasks;
 
 namespace CapaNegocios
 {
-    class ServicioStock : Base, IServicioBase<Stock>
+    public class ServicioStock : IServicioBase<Stock>
     {
-    
+        private StockDatos stockDatos = new StockDatos();
         
         public void Create(Stock stock)
         {
-            _dbContext.stocks.Add(stock);
-            _dbContext.SaveChanges();
+            stockDatos.Create(stock);
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            stockDatos.Delete(id);
         }
 
         public List<Stock> Get()
         {
-           return _dbContext.stocks.ToList();
+           return stockDatos.Get();
         }
 
         public Stock GetById(int? id)
         {
-            return _dbContext.stocks.FirstOrDefault(x => x.Id == id);
+            return stockDatos.GetById(id);
         }
 
         public void Update(Stock stock)
         {
-            var stockToUpdate = _dbContext.stocks.Find(stock.Id);
-            _dbContext.Entry(stockToUpdate).CurrentValues.SetValues(stock);
-            _dbContext.SaveChanges();
+            stockDatos.Update(stock);
         }
     }
 }

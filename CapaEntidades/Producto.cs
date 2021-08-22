@@ -13,5 +13,8 @@ namespace CapaEntidades
         public string Nombre { get; set; }
         [Required]
         public double Precio { get; set; }
+
+        public ICollection<DetalleFactura> detalleFacturas { get; set; }
+        public virtual Stock stock { get; set; }
     }
 }
