@@ -37,7 +37,7 @@ namespace SistemaFacturacion.Controllers
         // GET: Stock/Create
         public ActionResult Create()
         {
-            ViewBag.productos = servicioProducto.Get().Where(x => x.stock.Cantidad > 0);
+            ViewBag.productos = servicioProducto.Get().Where(x => x.stock != null && x.stock.Cantidad > 0);
             ViewBag.clientes = servicioCliente.Get();
             return View();
         }
