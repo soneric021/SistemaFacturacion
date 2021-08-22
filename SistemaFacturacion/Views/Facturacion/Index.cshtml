@@ -7,7 +7,7 @@
 <h2>Lista de Facturas</h2>
 
 <p>
-    @Html.ActionLink("Agregar Factura", "Create")
+    <a href="@Url.Action("Create")" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Crear Nuevo</a>
 </p>
 
 @using (Html.BeginForm())
@@ -31,7 +31,7 @@
     </div>
 }
 
-<table class="table">
+<table class="table" style="margin-top:70px;">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.cliente.Nombre)
@@ -41,28 +41,39 @@
             @Html.DisplayNameFor(model => model.Fecha)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.Descuento)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Itbis)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.Total)
         </th>
-        <th></th>
     </tr>
 
     @foreach (var item in Model)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.cliente.Nombre)
-            </td>
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.cliente.Nombre)
+    </td>
 
-            <td>
-                @Html.DisplayFor(modelItem => item.Fecha)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Total)
-            </td>
-            <td>
-                @Html.ActionLink("Detalles", "Details", new { id = item.Id })
-            </td>
-        </tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Fecha)
+    </td>
+    <td>
+        RD$@String.Format("{0:0.00}", item.Descuento)
+    </td>
+    <td>
+        RD$@String.Format("{0:0.00}", item.Itbis)
+    </td>
+    <td>
+        RD$@String.Format("{0:0.00}", item.Total)
+    </td>
+    <td>
+        <a href="@Url.Action("Details")" class="btn btn-info"><i class="fa fa-plus" aria-hidden="true"></i> Detalles</a>
+    </td>
+</tr>
     }
 
 </table>

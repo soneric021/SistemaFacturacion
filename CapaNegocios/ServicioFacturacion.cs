@@ -16,15 +16,21 @@ namespace CapaNegocios
         public void AgregarFacturacion(FacturacionViewModel facturacion)
         {
             var cliente = clienteDatos.GetById(facturacion.IdCliente);
+            var descuento = 0.0;
+            var itbis = facturacion.Total * 0.18;
             if (cliente.Categoria == Categoria.Premium)
             {
-                facturacion.Total -= facturacion.Total * 0.05;
+                descuento = facturacion.Total * 0.05;
+                facturacion.Total -= descuento;
+                
             }
             var factura = new Facturacion()
             {
                 Fecha = facturacion.Fecha,
                 IdCliente = facturacion.IdCliente,
-                Total = facturacion.Total
+                Total = facturacion.Total + itbis,
+                Descuento = descuento,
+                Itbis = itbis
             };
             
             

@@ -13,6 +13,8 @@ namespace CapaEntidades
         public int IdCliente { get; set; }
         [Required]
         public double Total { get; set; }
+        public double Itbis { get; set; }
+        public double Descuento { get; set; }
 
         [Required]
         public DateTime Fecha { get; set; }
