@@ -21,7 +21,7 @@ namespace SistemaFacturacion.Controllers
             if (!String.IsNullOrEmpty(searchString))
             {
             
-                proveedor.Where(x => x.Nombre.ToLower()== searchString.ToLower()
+                proveedor = proveedor.Where(x => x.Nombre.ToLower()== searchString.ToLower()
                 || x.Email.ToLower() == searchString.ToLower()).ToList();
             }
             return View(proveedor);
