@@ -6,92 +6,94 @@
 
 <h2>Lista de clientes</h2>
 
-<a href="@Url.Action("Create")" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Crear Nuevo</a>
+<div style="margin-bottom:2rem">
+    <a href="@Url.Action("Create")" class="btn btn-success"><i class="fa fa-plus" aria-hidden="true"></i> Crear Nuevo</a>
+</div>
 
 
 
-    @using (Html.BeginForm())
-    {
-        <div class="form-horizontal">
-            <div class="col-md-2 ">
-                @Html.Label("Buscar por Nombre", htmlAttributes: new { @class = "control-label" })
-            </div>
-            <div class="col-md-3">
-                @Html.Editor("SearchString", new { htmlAttributes = new { @class = "form-control", @style = "max-width:none;" } })
-            </div>
-            <div class="col-md-2 ">
-                @Html.Label("Buscar por Categoria", htmlAttributes: new { @class = "control-label" })
-            </div>
-            <div class="col-md-3">
-                @Html.DropDownList("filtroCategoria", new SelectList(ViewBag.categorias), "Seleccionar", htmlAttributes: new { @class = "form-control" })
-            </div>
-            <div class="col-md-2">
-                <input type="submit" value="Buscar" class="btn btn-danger col-md-12" />
-            </div>
+@using (Html.BeginForm())
+{
+    <div class="form-horizontal">
+        <div class="col-md-2 ">
+            @Html.Label("Buscar por Nombre", htmlAttributes: new { @class = "control-label" })
         </div>
-    }
+        <div class="col-md-3">
+            @Html.Editor("SearchString", new { htmlAttributes = new { @class = "form-control", @style = "max-width:none;" } })
+        </div>
+        <div class="col-md-2 ">
+            @Html.Label("Buscar por Categoria", htmlAttributes: new { @class = "control-label" })
+        </div>
+        <div class="col-md-3">
+            @Html.DropDownList("filtroCategoria", new SelectList(ViewBag.categorias), "Seleccionar", htmlAttributes: new { @class = "form-control" })
+        </div>
+        <div class="col-md-2">
+            <input type="submit" value="Buscar" class="btn btn-danger col-md-12" />
+        </div>
+    </div>
+}
 <br />
-    
-    <p style="margin-top:50px; ">
-        Total clientes: @ViewBag.clienteCantidad
-    </p>
-    <table class="table">
+
+@*<p style="margin-top:50px; ">
+
+    </p>*@
+<table class="table" style="margin-top:50px; ">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Cedula)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Telefono)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Email)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Categoria)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Cedula)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Nombre)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Telefono)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Categoria)
-            </th>
-            <th></th>
+            <td>
+                @Html.DisplayFor(modelItem => item.Cedula)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefono)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Categoria)
+            </td>
+            <td>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                        Opciones <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu text-center" role="menu">
+                        <li>
+                            <a href="@Url.Action("Edit", new { id = item.Id })"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Details", new { id = item.Id })"><i class="fa fa-eye" aria-hidden="true"></i> Ver</a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Delete", new { id = item.Id })"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a>
+                        </li>
+                    </ul>
+                </div>
+            </td>
         </tr>
+    }
 
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Cedula)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Nombre)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Telefono)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Email)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Categoria)
-                </td>
-                <td>
-                    <div class="btn-group">
-                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                            Opciones <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu text-center" role="menu">
-                            <li>
-                                <a href="@Url.Action("Edit", new { id = item.Id })"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Editar</a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action("Details", new { id = item.Id })"><i class="fa fa-eye" aria-hidden="true"></i> Ver</a>
-                            </li>
-                            <li>
-                                <a href="@Url.Action("Delete", new { id = item.Id })"><i class="fa fa-trash" aria-hidden="true"></i> Eliminar</a>
-                            </li>
-                        </ul>
-                    </div>
-                </td>
-            </tr>
-        }
-
-    </table>
+</table>

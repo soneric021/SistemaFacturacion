@@ -33,7 +33,9 @@ namespace CapaNegocios
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            //var proveedorToDelete = _dbContext.proveedores.Find(id);
+            //_dbContext.proveedores.Remove(proveedorToDelete);
+            //_dbContext.SaveChanges();
         }
 
         public List<Stock> Get()

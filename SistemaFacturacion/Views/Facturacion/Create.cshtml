@@ -63,10 +63,7 @@
 
 @using (Html.BeginForm())
 {
-    foreach (var product in ViewBag.productos)
-    {
-        <input type="hidden" id="producto_@product.Id" value="@product.Precio" />
-    }
+<div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.IdCliente, "Cliente", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -80,8 +77,6 @@
             <input type="date" id="fecha" value="" class="form-control" />
         </div>
     </div>
-
-
 
     <div class="form-group">
         @Html.LabelFor(model => model.IdCliente, "Producto", htmlAttributes: new { @class = "control-label col-md-2" })
@@ -111,32 +106,38 @@
         </div>
     </div>
 
+</div>
+
+
+    foreach (var product in ViewBag.productos)
+    {
+        <input type="hidden" id="producto_@product.Id" value="@product.Precio" />
+    }
 }
 
+<div style="margin-top:20rem">
+    <table class="table table-bordered" style="width:100%" id="tableProductRecords">
+        <thead>
+            <tr>
+                <th>
+                    Producto
+                </th>
+                <th>
+                    Cantidad
+                </th>
+            </tr>
+        </thead>
 
-<table class="table table-bordered" style="width:100%" id="tableProductRecords">
-    <thead>
-        <tr>
-            <th>
-                Producto
-            </th>
-            <th>
-                Cantidad
-            </th>
-        </tr>
-    </thead>
+    </table>
+</div>
 
-</table>
+
 <div class="form-group">
     <div class="col-md-12" style="margin-bottom:10px;">
         <input id="addFactura" value="Facturar" class="btn btn-danger pull-right" />
     </div>
 </div>
 
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

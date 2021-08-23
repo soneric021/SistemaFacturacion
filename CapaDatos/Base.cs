@@ -11,10 +11,6 @@ namespace CapaNegocios
     {
         
         protected SistemaFacturacionDbContext _dbContext;
-        //protected Base(SistemaFacturacionDbContext dbContext)
-        //{
-        //    _dbContext = dbContext;
-        //}
         protected Base()
         {
             _dbContext = new SistemaFacturacionDbContext();
